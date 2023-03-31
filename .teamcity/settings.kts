@@ -38,7 +38,9 @@ object GroovyMC_SimpleCI_Build : BuildType({
     name = "Build"
     templates(AbsoluteId("GroovyMC_PublishUsingGradle"))
 
-    vcs {
-        root(DslContext.settingsRoot)
+    params {
+        text("github_project_name", "MinecraftForge")
+        text("github_repository_name", "SimpleCI")
+        text("git_main_branch", "master")
     }
 })
