@@ -58,6 +58,11 @@ object GroovyMC_SimpleCI_Build : BuildType({
 
     steps {
         gradle {
+            name = "Configure TeamCity information"
+            tasks = "configureTeamCity"
+        }
+
+        gradle {
             name = "Build Gradle Project"
             tasks = "publish"
             jvmArgs = "-Xmx1G"
