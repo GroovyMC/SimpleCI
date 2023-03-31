@@ -1,3 +1,5 @@
+rootProject.name = 'simpleci'
+
 if (file('test').isDirectory()) {
     include(':test')
 }

@@ -59,7 +59,7 @@ object GroovyMC_SimpleCI_Build : BuildType({
     steps {
         gradle {
             name = "Build Gradle Project"
-            tasks = "build"
+            tasks = "publish"
             jvmArgs = "-Xmx1G"
         }
     }

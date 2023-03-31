@@ -12,6 +12,10 @@ repositories {
     mavenCentral()
 }
 
+versioning {
+    fromTag = '0.1'
+}
+
 group = 'io.github.groovymc'
 archivesBaseName = 'simpleci'
 println("SimpleCI plugin version: ${version = versioning.calculatedVersion}")
@@ -25,7 +29,7 @@ pluginBundle {
 
 gradlePlugin {
     plugins {
-        modsdotgroovy {
+        simpleci {
             id = 'io.github.groovymc.simpleci'
             displayName = 'SimpleCI'
             description = 'A Gradle Plugin used for simple (Minecraft mod) CI configuration'
@@ -56,14 +60,24 @@ dependencies {
     implementation "org.eclipse.jgit:org.eclipse.jgit:${jgit_version}"
 }
 
+project.afterEvaluate {
+    publishing {
+        publications {
+            named('pluginMaven').configure {
+                changelog.addArtifact(it)
+            }
+        }
+    }
+}
+
 publishing {
     repositories {
         maven {
             name = 'ModdingInquisitionMavenRepo'
             url = 'https://maven.moddinginquisition.org/releases'
             credentials {
-                username = findProperty('inquisitionMavenUser') ?: ''
-                password = findProperty('inquisitionMavenPassword') ?: ''
+                username = (System.getenv('MAVEN_USER') ?: findProperty('inquisitionMavenUser')) ?: ''
+                password = (System.getenv('MAVEN_PASSWORD') ?: findProperty('inquisitionMavenPassword')) ?: ''
             }
         }
     }

@@ -62,7 +62,7 @@ abstract class ChangelogTask extends DefaultTask {
         try (final writer = output.get().asFile.newWriter()) {
             changelog.sort({ -it.key }).forEach { Integer version, List<String> commits ->
                 writer.write("==== ${version}.0${ver.metadata === null ? '' : '+' + ver.metadata}\n")
-                writer.write(commits.join('\n'))
+                writer.write(commits.reverse().join('\n'))
                 writer.write('\n\n')
             }
         }
