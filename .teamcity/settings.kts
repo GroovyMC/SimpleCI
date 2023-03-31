@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.Swabra
+import jetbrains.buildServer.configs.kotlin.buildFeatures.commitStatusPublisher
 import jetbrains.buildServer.configs.kotlin.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
@@ -47,6 +48,16 @@ object GroovyMC_SimpleCI_Build : BuildType({
             swabra {
                 filesCleanup = Swabra.FilesCleanup.AFTER_BUILD
                 lockingProcesses = Swabra.LockingProcessPolicy.KILL
+            }
+        }
+        add {
+            commitStatusPublisher {
+                publisher = github {
+                    githubUrl = "https://api.github.com"
+                    authType = personalToken {
+                        token = "%commit_status_publisher%"
+                    }
+                }
             }
         }
     }
