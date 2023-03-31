@@ -37,4 +37,8 @@ object GroovyMC_SimpleCI_Build : BuildType({
     id("Build")
     name = "Build"
     templates(AbsoluteId("GroovyMC_PublishUsingGradle"))
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
 })
