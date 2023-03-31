@@ -1,6 +1,9 @@
 import jetbrains.buildServer.configs.kotlin.*
-import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
+import jetbrains.buildServer.configs.kotlin.buildFeatures.Swabra
+import jetbrains.buildServer.configs.kotlin.buildFeatures.swabra
+import jetbrains.buildServer.configs.kotlin.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.ui.add
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -27,7 +30,6 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2022.10"
 
 project {
-
     buildType(GroovyMC_SimpleCI_Build)
 }
 
@@ -41,11 +43,24 @@ object GroovyMC_SimpleCI_Build : BuildType({
 
     triggers {
         vcs {
+            triggerRules = "-:comment=\\[noci]:**"
         }
     }
 
     features {
-        perfmon {
+        add {
+            swabra {
+                filesCleanup = Swabra.FilesCleanup.AFTER_BUILD
+                lockingProcesses = Swabra.LockingProcessPolicy.KILL
+            }
+        }
+    }
+
+    steps {
+        gradle {
+            name = "Build Gradle Project"
+            tasks = "build"
+            jvmArgs = "-Xmx1G"
         }
     }
 })
