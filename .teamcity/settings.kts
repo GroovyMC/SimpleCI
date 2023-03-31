@@ -36,5 +36,5 @@ project {
 object GroovyMC_SimpleCI_Build : BuildType({
     id("Build")
     name = "Build"
-    templates(AbsoluteId("GroovyMC_PublishUsingGradle"))
+    templates(AbsoluteId("GroovyMC_TeamCityConfiguration_PublishUsingGradle"))
 })
