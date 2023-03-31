@@ -19,11 +19,11 @@ class SimpleCI implements Plugin<Project> {
         project.tasks.register('changelog', ChangelogTask)
 
         project.tasks.register("configureTeamCity") {
-            setOnlyIf {
+            it.setOnlyIf {
                 System.getenv('TEAMCITY_VERSION')
             }
             // Print the marker lines into the log which configure the pipeline
-            doLast {
+            it.doLast {
                 project.getLogger().lifecycle('Setting project variables and parameters.')
                 println "##teamcity[buildNumber '${project.version}']"
             }

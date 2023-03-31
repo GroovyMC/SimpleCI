@@ -36,36 +36,5 @@ project {
 object GroovyMC_SimpleCI_Build : BuildType({
     id("Build")
     name = "Build"
-
-    vcs {
-        root(DslContext.settingsRoot)
-    }
-
-    triggers {
-        vcs {
-            triggerRules = "-:comment=\\[noci]:**"
-        }
-    }
-
-    features {
-        add {
-            swabra {
-                filesCleanup = Swabra.FilesCleanup.AFTER_BUILD
-                lockingProcesses = Swabra.LockingProcessPolicy.KILL
-            }
-        }
-    }
-
-    steps {
-        gradle {
-            name = "Configure TeamCity information"
-            tasks = "configureTeamCity"
-        }
-
-        gradle {
-            name = "Build Gradle Project"
-            tasks = "publish"
-            jvmArgs = "-Xmx1G"
-        }
-    }
+    templates(AbsoluteId("GroovyMC_PublishUsingGradle"))
 })
