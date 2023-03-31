@@ -1,0 +1,3 @@
+if (file('test').isDirectory()) {
+    include(':test')
+}

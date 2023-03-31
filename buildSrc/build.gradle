@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'org.cadixdev.licenser' version '0.6.1'
+}
+
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+
+repositories {
+    mavenCentral()
+}
+
+final props = new Properties().tap {file('../gradle.properties').withReader(it.&load) }
+dependencies {
+    implementation "org.eclipse.jgit:org.eclipse.jgit:${props.get('jgit_version')}"
+}
+
+license {
+    header = project.file('../LICENSE-header.txt')
+}
+tasks.classes.dependsOn(tasks.updateLicenses)

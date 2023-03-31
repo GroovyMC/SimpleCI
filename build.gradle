@@ -1,0 +1,70 @@
+import io.github.groovymc.simpleci.SimpleCI
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'groovy-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.18.0'
+}
+apply plugin: SimpleCI
+
+repositories {
+    mavenCentral()
+}
+
+group = 'io.github.groovymc'
+archivesBaseName = 'simpleci'
+println("SimpleCI plugin version: ${version = versioning.calculatedVersion}")
+
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+
+pluginBundle {
+    website = 'https://github.com/GroovyMC/SimpleCI'
+    vcsUrl = 'https://github.com/GroovyMC/SimpleCI'
+}
+
+gradlePlugin {
+    plugins {
+        modsdotgroovy {
+            id = 'io.github.groovymc.simpleci'
+            displayName = 'SimpleCI'
+            description = 'A Gradle Plugin used for simple (Minecraft mod) CI configuration'
+            implementationClass = 'io.github.groovymc.simpleci.SimpleCI'
+        }
+    }
+}
+
+tasks.named('jar', Jar) {
+    it.manifest.attributes([
+            'Specification-Title'     : archivesBaseName,
+            'Specification-Vendor'    : 'GroovyMC',
+            'Specification-Version'   : '1',
+            'Implementation-Title'    : archivesBaseName,
+            'Implementation-Version'  : "${project.version}",
+            'Implementation-Vendor'   : 'Matyrobbrt',
+            'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})"
+    ])
+}
+
+tasks.register('copySources', Copy) {
+    from('buildSrc/src')
+    into('src')
+}
+tasks.classes.dependsOn(tasks.copySources)
+
+dependencies {
+    implementation "org.eclipse.jgit:org.eclipse.jgit:${jgit_version}"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = 'ModdingInquisitionMavenRepo'
+            url = 'https://maven.moddinginquisition.org/releases'
+            credentials {
+                username = findProperty('inquisitionMavenUser') ?: ''
+                password = findProperty('inquisitionMavenPassword') ?: ''
+            }
+        }
+    }
+}
