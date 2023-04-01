@@ -16,7 +16,7 @@ versioning {
     fromTag = '0.1'
 }
 
-group = 'io.github.groovymc'
+group = 'io.github.groovymc.simpleci'
 archivesBaseName = 'simpleci'
 println("SimpleCI plugin version: ${version = versioning.calculatedVersion}")
 
