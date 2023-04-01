@@ -54,7 +54,11 @@ tasks.register('copySources', Copy) {
     from('buildSrc/src')
     into('src')
 }
-tasks.classes.dependsOn(tasks.copySources)
+
+tasks.named('compileGroovy', GroovyCompile) {
+    it.dependsOn(tasks.copySources)
+    it.outputs.upToDateWhen { false }
+}
 
 dependencies {
     implementation "org.eclipse.jgit:org.eclipse.jgit:${jgit_version}"
