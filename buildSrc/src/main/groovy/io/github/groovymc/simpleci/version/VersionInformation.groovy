@@ -46,11 +46,11 @@ final class VersionInformation {
         }
     }
 
-    void encounterCommit(boolean ignoreNotOnCI, boolean ciByDefault, RevCommit commit) {
+    boolean encounterCommit(boolean ignoreNotOnCI, boolean ciByDefault, RevCommit commit) {
         final message = commit.fullMessage
         if (ignoreNotOnCI) {
             if ((ciByDefault && message.contains('[noci]')) || (!ciByDefault && !message.contains('[ci]'))) {
-                return
+                return false
             }
         }
 
@@ -77,6 +77,8 @@ final class VersionInformation {
                 }
             }
         }
+
+        return true
     }
 
     String toString(boolean withMetadata) {

@@ -76,8 +76,8 @@ abstract class VersioningExtension {
             final asTag = commitByTag[commit.id]
             if (asTag === null) {
                 version?.tap {
-                    it.encounterCommit(ignoreNotOnCI, ciByDefault, commit)
-                    onEncounter.accept(commit, it)
+                    if (it.encounterCommit(ignoreNotOnCI, ciByDefault, commit))
+                        onEncounter.accept(commit, it)
                 }
             } else {
                 version = VersionInformation.fromTagName(asTag.name.drop('refs/tags/'.length()))
