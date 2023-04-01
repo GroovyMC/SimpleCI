@@ -134,5 +134,9 @@ final class VersionInformation {
                 return "-beta${betaNumber === 0 ? '' : '.' + betaNumber}"
             }
         }
+
+        <T> T ifVersionType(T alpha = null, T beta = null, T release = null) {
+            return alphaNumber !== -1 ? alpha : (betaNumber !== -1 ? beta : release)
+        }
     }
 }
