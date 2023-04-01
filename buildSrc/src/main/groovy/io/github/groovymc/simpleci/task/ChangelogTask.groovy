@@ -12,14 +12,11 @@ import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.Ref
 import org.eclipse.jgit.revwalk.RevCommit
 import org.gradle.api.DefaultTask
+import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputFile
-import org.gradle.api.tasks.Optional
-import org.gradle.api.tasks.OutputFile
-import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.*
 
 @CompileStatic
 abstract class ChangelogTask extends DefaultTask {
@@ -28,7 +25,7 @@ abstract class ChangelogTask extends DefaultTask {
             new File(project.buildDir, 'changelog.txt')
         }))
         getOutputs().upToDateWhen { false } // We want to make sure always to generate accurate changelogs
-        getGitDir().convention(project.layout.file(project.provider { getProject().projectDir }))
+        getGitDir().convention(project.layout.dir(project.provider { getProject().projectDir }))
     }
 
     @Optional
@@ -40,8 +37,8 @@ abstract class ChangelogTask extends DefaultTask {
     abstract Property<String> getStart()
 
     @Optional
-    @InputFile
-    abstract RegularFileProperty getGitDir()
+    @InputDirectory
+    abstract DirectoryProperty getGitDir()
 
     @TaskAction
     void run() {
