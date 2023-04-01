@@ -26,6 +26,7 @@ abstract class ChangelogTask extends DefaultTask {
         getOutput().convention(project.layout.file(project.provider {
             new File(project.buildDir, 'changelog.txt')
         }))
+        getOutputs().upToDateWhen { false } // We want to make sure always to generate accurate changelogs
     }
 
     @Optional
