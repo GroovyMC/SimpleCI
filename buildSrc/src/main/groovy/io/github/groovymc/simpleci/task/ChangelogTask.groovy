@@ -16,6 +16,7 @@ import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
@@ -27,6 +28,7 @@ abstract class ChangelogTask extends DefaultTask {
             new File(project.buildDir, 'changelog.txt')
         }))
         getOutputs().upToDateWhen { false } // We want to make sure always to generate accurate changelogs
+        getGitDir().convention(project.layout.file(project.provider { getProject().projectDir }))
     }
 
     @Optional
@@ -37,10 +39,14 @@ abstract class ChangelogTask extends DefaultTask {
     @Optional
     abstract Property<String> getStart()
 
+    @Optional
+    @InputFile
+    abstract RegularFileProperty getGitDir()
+
     @TaskAction
     void run() {
         final Map<Integer, List<String>> changelog = new HashMap<>()
-        final git = Git.open(getProject().projectDir)
+        final git = Git.open(getGitDir().get().asFile)
 
         final VersioningExtension versioningExtension = project.extensions.getByType(VersioningExtension)
 
