@@ -20,12 +20,15 @@ import org.gradle.api.tasks.*
 
 @CompileStatic
 abstract class ChangelogTask extends DefaultTask {
+    private final Property<File> gitDir
     ChangelogTask() {
+        this.gitDir = project.objects.property(File)
+
         getOutput().convention(project.layout.file(project.provider {
             new File(project.buildDir, 'changelog.txt')
         }))
         getOutputs().upToDateWhen { false } // We want to make sure always to generate accurate changelogs
-        getGitDir().convention(project.layout.dir(project.provider { getProject().projectDir }))
+        getGitDir().convention(project.provider { getProject().projectDir })
     }
 
     @Optional
@@ -36,14 +39,15 @@ abstract class ChangelogTask extends DefaultTask {
     @Optional
     abstract Property<String> getStart()
 
-    @Optional
-    @InputDirectory
-    abstract DirectoryProperty getGitDir()
+    @Internal
+    Property<File> getGitDir() {
+        return gitDir
+    }
 
     @TaskAction
     void run() {
         final Map<Integer, List<String>> changelog = new HashMap<>()
-        final git = Git.open(getGitDir().get().asFile)
+        final git = Git.open(getGitDir().get())
 
         final VersioningExtension versioningExtension = project.extensions.getByType(VersioningExtension)
 
