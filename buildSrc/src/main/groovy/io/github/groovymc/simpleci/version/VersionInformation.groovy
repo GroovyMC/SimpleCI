@@ -124,19 +124,19 @@ final class VersionInformation {
 
         @Override
         String toString() {
-            if (betaNumber === -1 && alphaNumber === -1) {
+            if (betaNumber == -1 && alphaNumber == -1) {
                 return ''
             }
 
             if (lastEncounteredAlpha && alphaNumber >= 0) {
-                return "-alpha${alphaNumber === 0 ? '' : '.' + alphaNumber}"
+                return "-alpha${alphaNumber == 0 ? '' : '.' + alphaNumber}"
             } else {
-                return "-beta${betaNumber === 0 ? '' : '.' + betaNumber}"
+                return "-beta${betaNumber == 0 ? '' : '.' + betaNumber}"
             }
         }
 
         <T> T ifVersionType(T alpha = null, T beta = null, T release = null) {
-            return alphaNumber !== -1 ? alpha : (betaNumber !== -1 ? beta : release)
+            return alphaNumber != -1 ? alpha : (betaNumber != -1 ? beta : release)
         }
     }
 }
