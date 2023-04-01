@@ -55,14 +55,17 @@ abstract class VersioningExtension {
         if (start === null) return null
 
         final commitByTag = git.tagList().call().stream()
-            .collect(Collectors.toMap({ Ref ref -> git.repository.refDatabase.peel(ref).peeledObjectId }, { Ref ref -> ref }))
+            .collect(Collectors.toMap({ Ref ref ->
+                final peeledRef = git.repository.refDatabase.peel(ref)
+                return peeledRef.peeledObjectId ?: peeledRef.objectId
+            }, { Ref ref -> ref }))
 
         def version = start.value === null ? null : VersionInformation.fromTagName(start.value)
         final peeled = start.key === null ? null : git.repository.refDatabase.peel(start.key)
 
         final log = git.log()
         if (peeled !== null) {
-            log.addRange(peeled.peeledObjectId, until)
+            log.addRange(peeled.peeledObjectId ?: peeled.objectId, until)
         } else {
             log.all()
         }
