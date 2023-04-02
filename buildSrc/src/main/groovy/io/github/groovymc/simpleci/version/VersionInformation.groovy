@@ -46,10 +46,19 @@ final class VersionInformation {
         }
     }
 
+    static boolean isNoCi(String message) {
+        return message.contains('[noci]')
+                || message.contains('[skip ci]')
+                || message.contains('[ci skip]')
+                || message.contains('[no ci]')
+                || message.contains('[skip actions]')
+                || message.contains('[actions skip]')
+    }
+
     boolean encounterCommit(boolean ignoreNotOnCI, boolean ciByDefault, RevCommit commit) {
         final message = commit.fullMessage
         if (ignoreNotOnCI) {
-            if ((ciByDefault && message.contains('[noci]')) || (!ciByDefault && !message.contains('[ci]'))) {
+            if ((ciByDefault && isNoCi(message)) || (!ciByDefault && !message.contains('[ci]'))) {
                 return false
             }
         }
