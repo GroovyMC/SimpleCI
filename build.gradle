@@ -1,4 +1,4 @@
-import io.github.groovymc.simpleci.SimpleCI
+import org.groovymc.simpleci.SimpleCI
 
 plugins {
     id 'java'
@@ -16,7 +16,7 @@ versioning {
     fromTag = '0.1'
 }
 
-group = 'io.github.groovymc.simpleci'
+group = 'org.groovymc.simpleci'
 archivesBaseName = 'simpleci'
 println("SimpleCI plugin version: ${version = versioning.calculatedVersion}")
 
@@ -30,10 +30,10 @@ pluginBundle {
 gradlePlugin {
     plugins {
         simpleci {
-            id = 'io.github.groovymc.simpleci'
+            id = 'org.groovymc.simpleci'
             displayName = 'SimpleCI'
             description = 'A Gradle Plugin used for simple (Minecraft mod) CI configuration'
-            implementationClass = 'io.github.groovymc.simpleci.SimpleCI'
+            implementationClass = 'org.groovymc.simpleci.SimpleCI'
         }
     }
 }

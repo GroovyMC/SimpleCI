@@ -44,21 +44,20 @@ object GroovyMC_SimpleCI_Build : BuildType({
     }
 
     features {
-        add {
-            swabra {
-                filesCleanup = Swabra.FilesCleanup.AFTER_BUILD
-                lockingProcesses = Swabra.LockingProcessPolicy.KILL
-            }
+        swabra {
+            filesCleanup = Swabra.FilesCleanup.BEFORE_BUILD
+            lockingProcesses = Swabra.LockingProcessPolicy.KILL
         }
-        add {
-            commitStatusPublisher {
-                publisher = github {
-                    githubUrl = "https://api.github.com"
-                    authType = personalToken {
-                        token = "%commit_status_publisher%"
-                    }
+        commitStatusPublisher {
+            publisher = github {
+                githubUrl = "https://api.github.com"
+                authType = personalToken {
+                    token = "%commit_status_publisher%"
                 }
             }
+        }
+        discordNotification {
+            webhookUrl = "%discord_webhook%"
         }
     }
 

@@ -3,19 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 
-package io.github.groovymc.simpleci.version
+package org.groovymc.simpleci.version
 
 
 import groovy.transform.CompileStatic
 import groovy.transform.NamedVariant
-import groovy.transform.stc.ClosureParams
-import io.github.groovymc.simpleci.internal.Util
+import org.groovymc.simpleci.internal.Util
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.AnyObjectId
 import org.eclipse.jgit.lib.Constants
 import org.eclipse.jgit.lib.Ref
 import org.eclipse.jgit.revwalk.RevCommit
-import org.eclipse.jgit.revwalk.RevTag
 import org.gradle.api.Project
 import org.gradle.api.provider.Property
 
@@ -23,7 +21,6 @@ import javax.annotation.Nullable
 import javax.inject.Inject
 import java.util.function.BiConsumer
 import java.util.stream.Collectors
-import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
 @CompileStatic

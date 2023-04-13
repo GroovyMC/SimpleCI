@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-package io.github.groovymc.simpleci.internal
+package org.groovymc.simpleci.internal
 
 import groovy.transform.CompileStatic
 

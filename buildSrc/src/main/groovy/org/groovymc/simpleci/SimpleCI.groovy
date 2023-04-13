@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 
-package io.github.groovymc.simpleci
+package org.groovymc.simpleci
 
 import groovy.transform.CompileStatic
-import io.github.groovymc.simpleci.task.ChangelogTask
-import io.github.groovymc.simpleci.version.VersioningExtension
+import org.groovymc.simpleci.task.ChangelogTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.groovymc.simpleci.version.VersioningExtension
 
 @CompileStatic
 class SimpleCI implements Plugin<Project> {
@@ -18,7 +18,7 @@ class SimpleCI implements Plugin<Project> {
         project.extensions.create('versioning', VersioningExtension, project)
         project.tasks.register('changelog', ChangelogTask)
 
-        project.tasks.register("configureTeamCity") {
+        project.tasks.register('configureTeamCity') {
             it.setOnlyIf {
                 System.getenv('TEAMCITY_VERSION')
             }

@@ -3,20 +3,19 @@
  * SPDX-License-Identifier: MIT
  */
 
-package io.github.groovymc.simpleci.task
+package org.groovymc.simpleci.task
 
 import groovy.transform.CompileStatic
-import io.github.groovymc.simpleci.version.VersionInformation
-import io.github.groovymc.simpleci.version.VersioningExtension
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.Ref
 import org.eclipse.jgit.revwalk.RevCommit
 import org.gradle.api.DefaultTask
-import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.*
+import org.groovymc.simpleci.version.VersionInformation
+import org.groovymc.simpleci.version.VersioningExtension
 
 @CompileStatic
 abstract class ChangelogTask extends DefaultTask {
