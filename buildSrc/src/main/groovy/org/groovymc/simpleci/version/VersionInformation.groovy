@@ -66,6 +66,7 @@ final class VersionInformation {
         final hasMinor = message.contains('[minor]')
         if (hasMinor) {
             minor++
+            patch = 0
             // Let's reset alphas and beta versions as we bumped the minor
             alphaBeta.reset()
         }
