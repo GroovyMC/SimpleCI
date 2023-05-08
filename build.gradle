@@ -23,6 +23,7 @@ println("SimpleCI plugin version: ${version = versioning.calculatedVersion}")
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 
 pluginBundle {
+    tags = ['versioning', 'git']
     website = 'https://github.com/GroovyMC/SimpleCI'
     vcsUrl = 'https://github.com/GroovyMC/SimpleCI'
 }
