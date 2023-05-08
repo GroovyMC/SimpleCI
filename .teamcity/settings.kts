@@ -56,9 +56,6 @@ object GroovyMC_SimpleCI_Build : BuildType({
                 }
             }
         }
-        discordNotification {
-            webhookUrl = "%discord_webhook%"
-        }
     }
 
     steps {
