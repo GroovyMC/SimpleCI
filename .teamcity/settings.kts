@@ -70,7 +70,6 @@ object GroovyMC_SimpleCI_Build : BuildType({
         gradle {
             name = "Build Gradle Project"
             tasks = "clean publish publishPlugins"
-            jvmArgs = "-Xmx1G"
         }
     }
 })
