@@ -8,6 +8,7 @@ package org.groovymc.simpleci.version
 
 import groovy.transform.CompileStatic
 import groovy.transform.NamedVariant
+import org.eclipse.jgit.lib.ObjectId
 import org.groovymc.simpleci.internal.Util
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.AnyObjectId
@@ -55,7 +56,7 @@ abstract class VersioningExtension {
             .collect(Collectors.toMap({ Ref ref ->
                 final peeledRef = git.repository.refDatabase.peel(ref)
                 return peeledRef.peeledObjectId ?: peeledRef.objectId
-            }, { Ref ref -> ref }))
+            }, { Ref ref -> ref }, { ObjectId a, ObjectId b -> b }))
 
         def version = start.value === null ? null : VersionInformation.fromTagName(start.value)
         final peeled = start.key === null ? null : git.repository.refDatabase.peel(start.key)
